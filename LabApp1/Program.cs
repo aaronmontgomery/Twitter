@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using TwitterApi;
 
@@ -12,27 +13,30 @@ namespace LabApp1
 
             Console.WriteLine("LabApp1 - Aaron Montgomery");
 
+            System.Collections.Generic.IReadOnlyCollection<Models.Shared.Emoji> emojis = await Shared.Emoji.GetEmjois();
+
             Authentication authentication = new Authentication();
             await authentication.TokenAsync();
 
             SampledStream sampledStream = new SampledStream();
-            await foreach (Models.TwitterApi.Tweet tweet in sampledStream.GetSampledStreamAsync(authentication.Token))
+
+            CancellationToken cancellationToken = new CancellationToken();
+
+            await foreach (Models.TwitterApi.Tweet tweet in sampledStream.GetSampledStreamAsync(authentication.Token).WithCancellation(cancellationToken))
             {
                 if (tweet != null)
                 {
                     // process tweet
-                    char[] chars = tweet.Data.Text.ToCharArray();
+                    //char[] chars = tweet.Data.Text.ToCharArray();
                     Console.WriteLine("id: " + tweet.Data.Id);
                     Console.WriteLine("text: " + tweet.Data.Text);
-                    Console.WriteLine("------------------------------------------------------------------------------------");
+                    Console.WriteLine();
                     //Console.ReadKey();
                     await Task.Delay(1000);
                 }
             }
 
             /*
-            
-
             char[] x = chars.Where(x => x.ToString().StartsWith("\\u")).Select(x => x).ToArray();
 
             // #

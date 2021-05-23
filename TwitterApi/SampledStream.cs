@@ -1,29 +1,39 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
+using System.Collections.Generic;
 using System.Net.Http;
 
 namespace TwitterApi
 {
-    public class SampledStream
+    public class SampledStream //: Shared.WebClient
     {
         public async IAsyncEnumerable<Models.TwitterApi.Tweet> GetSampledStreamAsync(Models.TwitterApi.Token token)
         {
             using HttpClient httpClient = new HttpClient();
+
             httpClient.DefaultRequestHeaders.Authorization = System.Net.Http.Headers.AuthenticationHeaderValue.Parse($"Bearer {token.AccessToken}");
+
             using Stream stream = await httpClient.GetStreamAsync("https://api.twitter.com/2/tweets/sample/stream");
-            TextReader streamReader = new StreamReader(stream);
-            
+
+            using TextReader textReader = new StreamReader(stream);
+
             while (stream.CanRead)
             {
+                string json;
                 Models.TwitterApi.Tweet tweet;
 
                 try
                 {
-                    string json = await streamReader.ReadLineAsync();
+                    json = await textReader.ReadLineAsync();
                     tweet = System.Text.Json.JsonSerializer.Deserialize<Models.TwitterApi.Tweet>(json);
                 }
 
-                catch
+                catch (IOException exception)
+                {
+                    //textReader = new StreamReader(stream);
+                    tweet = null;
+                }
+
+                catch (System.Exception exception)
                 {
                     tweet = null;
                 }

@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Shared\Shared.csproj" />
     <ProjectReference Include="..\TwitterApi\TwitterApi.csproj" />
   </ItemGroup>
 
