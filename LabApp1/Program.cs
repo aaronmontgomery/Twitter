@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Threading;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TwitterApi;
 
@@ -9,60 +9,35 @@ namespace LabApp1
     {
         static async Task Main(string[] args)
         {
-            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            AnalyzeTwitterStream analyzeTwitterStream = new AnalyzeTwitterStream();
+            await analyzeTwitterStream.Run();
+        }
+    }
 
+    public class AnalyzeTwitterStream
+    {
+        public async Task Run()
+        {
             Console.WriteLine("LabApp1 - Aaron Montgomery");
-
-            System.Collections.Generic.IReadOnlyCollection<Models.Shared.Emoji> emojis = await Shared.Emoji.GetEmjois();
 
             Authentication authentication = new Authentication();
             await authentication.TokenAsync();
 
             SampledStream sampledStream = new SampledStream();
 
-            CancellationToken cancellationToken = new CancellationToken();
+            IReadOnlyCollection<Models.Shared.Emoji> emojis = await Shared.Emoji.GetEmjois();
 
-            await foreach (Models.TwitterApi.Tweet tweet in sampledStream.GetSampledStreamAsync(authentication.Token).WithCancellation(cancellationToken))
+            Models.Statistics statistics = new Models.Statistics();
+
+            Shared.Twitter twitter = new Shared.Twitter();
+
+            await foreach (Models.TwitterApi.Tweet tweet in sampledStream.GetSampledStreamAsync(authentication.Token))
             {
                 if (tweet != null)
                 {
-                    // process tweet
-                    //char[] chars = tweet.Data.Text.ToCharArray();
-                    Console.WriteLine("id: " + tweet.Data.Id);
-                    Console.WriteLine("text: " + tweet.Data.Text);
-                    Console.WriteLine();
-                    //Console.ReadKey();
-                    await Task.Delay(1000);
+                    await twitter.ProcessTweetAsync(tweet, emojis, statistics);
                 }
             }
-
-            /*
-            char[] x = chars.Where(x => x.ToString().StartsWith("\\u")).Select(x => x).ToArray();
-
-            // #
-            if (tweet.Data.Text.Contains('#'))
-            {
-
-            }
-
-            // http*:
-            string[] urlPrefixes = new string[] { @"http://", @"https://" };
-            if (tweet.Data.Text.Contains(urlPrefixes[0]) || tweet.Data.Text.Contains(urlPrefixes[1]))
-            {
-
-            }
-
-            // emojis
-            if (false)
-            {
-
-            }
-
-            if (x.Count() > 0)
-            {
-
-            }
-            */
         }
     }
 }

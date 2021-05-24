@@ -27,13 +27,7 @@ namespace TwitterApi
                     tweet = System.Text.Json.JsonSerializer.Deserialize<Models.TwitterApi.Tweet>(json);
                 }
 
-                catch (IOException exception)
-                {
-                    //textReader = new StreamReader(stream);
-                    tweet = null;
-                }
-
-                catch (System.Exception exception)
+                catch
                 {
                     tweet = null;
                 }
