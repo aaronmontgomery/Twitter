@@ -5,7 +5,7 @@ namespace Shared
 {
     public class Emoji
     {
-        public static async Task<IReadOnlyCollection<Models.Shared.Emoji>> GetEmjois()
+        public static async Task<IReadOnlyCollection<Models.Shared.Emoji>> GetEmjoisAsync()
         {
             using System.Net.Http.HttpClient httpClient = new System.Net.Http.HttpClient();
             string json = await httpClient.GetStringAsync("https://raw.githubusercontent.com/iamcal/emoji-data/master/emoji.json");

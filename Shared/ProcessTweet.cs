@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Shared
@@ -12,14 +11,12 @@ namespace Shared
 
             if (tweet.Data.Text.Contains('#'))
             {
-                await GetHashTagsAsync(tweet, statistics);
+                //await GetHashTagsAsync(tweet, statistics);
             }
 
-            // http*:
-            string[] urlPrefixes = new string[] { @"http://", @"https://" };
-            if (tweet.Data.Text.Contains(urlPrefixes[0]) || tweet.Data.Text.Contains(urlPrefixes[1]))
+            if (tweet.Data.Text.ContainsUrl())
             {
-
+                statistics.NumberOfTweetsThatContainUrl++;
             }
 
             // emojis
@@ -28,12 +25,7 @@ namespace Shared
 
             }
 
-            statistics.TotalNumberOfTweetReceived++;
-        }
-
-        public async Task GetHashTagsAsync(Models.TwitterApi.Tweet tweet, Models.Statistics statistics)
-        {
-
+            statistics.TotalNumberOfTweetsReceived++;
         }
     }
 }

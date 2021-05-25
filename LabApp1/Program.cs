@@ -7,9 +7,13 @@ namespace LabApp1
 {
     class Program
     {
+
         static async Task Main(string[] args)
         {
+            Console.WriteLine("LabApp1 - Aaron Montgomery");
+
             AnalyzeTwitterStream analyzeTwitterStream = new AnalyzeTwitterStream();
+
             await analyzeTwitterStream.Run();
         }
     }
@@ -18,14 +22,12 @@ namespace LabApp1
     {
         public async Task Run()
         {
-            Console.WriteLine("LabApp1 - Aaron Montgomery");
+            IReadOnlyCollection<Models.Shared.Emoji> emojis = await Shared.Emoji.GetEmjoisAsync();
 
             Authentication authentication = new Authentication();
             await authentication.TokenAsync();
 
             SampledStream sampledStream = new SampledStream();
-
-            IReadOnlyCollection<Models.Shared.Emoji> emojis = await Shared.Emoji.GetEmjois();
 
             Models.Statistics statistics = new Models.Statistics();
 
