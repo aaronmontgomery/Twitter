@@ -25,6 +25,11 @@ namespace Shared
                 statistics.NumberOfTweetsThatContainUrl++;
             }
 
+            if (tweet.Data.Text.Contains("pic.twitter.com") || tweet.Data.Text.Contains("Instagram"))
+            {
+                statistics.NumberOfTweetsThatContainPhotoUrl++;
+            }
+
             statistics.TotalNumberOfTweetsReceived++;
         }
     }

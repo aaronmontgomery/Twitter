@@ -1,44 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using TwitterApi;
 
 namespace LabApp1
 {
     class Program
     {
-
         static async Task Main(string[] args)
         {
-            Console.WriteLine("LabApp1 - Aaron Montgomery");
+            ConsoleLog consoleLog = new ConsoleLog();
 
-            AnalyzeTwitterStream analyzeTwitterStream = new AnalyzeTwitterStream();
+            Twitter twitter = new Twitter();
 
-            await analyzeTwitterStream.Run();
-        }
-    }
-
-    public class AnalyzeTwitterStream
-    {
-        public async Task Run()
-        {
-            IReadOnlyCollection<Models.Shared.Emoji> emojis = await Shared.Emoji.GetEmjoisAsync();
-
-            Authentication authentication = new Authentication();
-            await authentication.TokenAsync();
-
-            SampledStream sampledStream = new SampledStream();
-
-            Models.Statistics statistics = new Models.Statistics();
-
-            Shared.Twitter twitter = new Shared.Twitter();
-
-            await foreach (Models.TwitterApi.Tweet tweet in sampledStream.GetSampledStreamAsync(authentication.Token))
+            await foreach (Models.Statistics statistics in twitter.AnalyzeTwitterStream())
             {
-                if (tweet != null)
-                {
-                    twitter.ProcessTweet(tweet, emojis, statistics);
-                }
+                consoleLog.LogToConsole(statistics);
+            }
+        }
+
+        public class ConsoleLog
+        {
+            public ConsoleLog()
+            {
+                Console.WriteLine("LabApp1 - Aaron Montgomery");
+            }
+
+            public void LogToConsole(Models.Statistics statistics)
+            {
+                Console.SetCursorPosition(0, 1);
+                Console.WriteLine("TotalNumberOfTweetsReceived: " + statistics.TotalNumberOfTweetsReceived);
+                Console.WriteLine("AverageTweetsPerHour: " + statistics.AverageTweetsPerHour);
+                Console.WriteLine("AverageTweetsPerMinute: " + statistics.AverageTweetsPerMinute);
+                Console.WriteLine("AverageTweetsPerSecond: " + statistics.AverageTweetsPerSecond);
             }
         }
     }

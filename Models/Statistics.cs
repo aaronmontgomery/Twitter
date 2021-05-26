@@ -14,11 +14,21 @@ namespace Models
 
             if (nameof(TotalNumberOfTweetsReceived) == propertyName)
             {
+                AverageTweetsPerHour = (double)TotalNumberOfTweetsReceived / (double)Stopwatch.Elapsed.TotalHours;
+                AverageTweetsPerMinute = (double)TotalNumberOfTweetsReceived / (double)Stopwatch.Elapsed.TotalMinutes;
+                AverageTweetsPerSecond = (double)TotalNumberOfTweetsReceived / (double)Stopwatch.Elapsed.TotalSeconds;
                 PercentOfTweetsThatContainUrl = ((double)NumberOfTweetsThatContainUrl / (double)TotalNumberOfTweetsReceived) * 100;
+                PercentOfTweetsThatContainPhotoUrl = ((double)NumberOfTweetsThatContainPhotoUrl / (double)TotalNumberOfTweetsReceived) * 100;
             }
         }
 
         public Stopwatch Stopwatch { get; set; }
+
+        public double AverageTweetsPerHour { get; set; }
+
+        public double AverageTweetsPerMinute { get; set; }
+
+        public double AverageTweetsPerSecond { get; set; }
 
         public Dictionary<string, ulong> HashTags { get; }
 
@@ -27,6 +37,10 @@ namespace Models
         public ulong NumberOfTweetsThatContainUrl { get; set; }
 
         public double PercentOfTweetsThatContainUrl { get; set; }
+
+        public ulong NumberOfTweetsThatContainPhotoUrl { get; set; }
+
+        public double PercentOfTweetsThatContainPhotoUrl { get; set; }
 
         private ulong totalNumberOfTweetsReceived;
         public ulong TotalNumberOfTweetsReceived
