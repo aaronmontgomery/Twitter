@@ -2,7 +2,7 @@
 
 namespace Shared
 {
-    public static partial class Extentions
+    public static partial class Extensions
     {
         public static IReadOnlyDictionary<string, ulong> CountStringPatternsEndsWithSpace(this string s, string[] patterns)
         {

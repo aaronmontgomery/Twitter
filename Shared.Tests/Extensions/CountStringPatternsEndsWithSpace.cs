@@ -10,14 +10,14 @@ namespace Shared.Tests
         [TestCaseSource(typeof(TestData), nameof(TestData.TestCases))]
         public IReadOnlyDictionary<string, ulong> CountStringPatternsEndsWithSpace__CountsPatternsInStringsPassed(string s, string[] patterns)
         {
-            return Extentions.CountStringPatternsEndsWithSpace(s, patterns);
+            return Shared.Extensions.CountStringPatternsEndsWithSpace(s, patterns);
         }
 
         [TestCase("", null)]
         [TestCase(null, new string[] { "" })]
         public void CountStringPatternsEndsWithSpace__NullReferenceException(string s, string[] patterns)
         {
-            Assert.Throws<System.NullReferenceException>(() => { Extentions.CountStringPatternsEndsWithSpace(s, patterns); });
+            Assert.Throws<System.NullReferenceException>(() => { Shared.Extensions.CountStringPatternsEndsWithSpace(s, patterns); });
         }
 
         public class TestData

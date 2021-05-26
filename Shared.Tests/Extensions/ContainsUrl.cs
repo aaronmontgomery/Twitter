@@ -12,7 +12,7 @@ namespace Shared.Tests
         [TestCase("https://test.com ", ExpectedResult = true)]
         public bool ContainsUrl__True(string s)
         {
-            return Extentions.ContainsUrl(s);
+            return Shared.Extensions.ContainsUrl(s);
         }
 
         [TestCase("", ExpectedResult = false)]
@@ -21,13 +21,13 @@ namespace Shared.Tests
         [TestCase("test string", ExpectedResult = false)]
         public bool ContainsUrl__False(string s)
         {
-            return Extentions.ContainsUrl(s);
+            return Shared.Extensions.ContainsUrl(s);
         }
 
         [TestCase(null)]
         public void ContainsUrl__NullReferenceException(string s)
         {
-            Assert.Throws<System.NullReferenceException>(() => { Extentions.ContainsUrl(s); });
+            Assert.Throws<System.NullReferenceException>(() => { Shared.Extensions.ContainsUrl(s); });
         }
     }
 }

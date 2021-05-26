@@ -18,8 +18,10 @@ namespace Models
                 AverageTweetsPerHour = (double)TotalNumberOfTweetsReceived / (double)Stopwatch.Elapsed.TotalHours;
                 AverageTweetsPerMinute = (double)TotalNumberOfTweetsReceived / (double)Stopwatch.Elapsed.TotalMinutes;
                 AverageTweetsPerSecond = (double)TotalNumberOfTweetsReceived / (double)Stopwatch.Elapsed.TotalSeconds;
+                PercentOfTweetsThatContainEmojis = ((double)NumberOfTweetsThatContainEmojis / (double)TotalNumberOfTweetsReceived) * 100;
                 PercentOfTweetsThatContainUrl = ((double)NumberOfTweetsThatContainUrl / (double)TotalNumberOfTweetsReceived) * 100;
                 PercentOfTweetsThatContainPhotoUrl = ((double)NumberOfTweetsThatContainPhotoUrl / (double)TotalNumberOfTweetsReceived) * 100;
+                Emojis.OrderByDescending(x => x.Value);
                 HashTags.OrderByDescending(x => x.Value);
                 Urls.OrderByDescending(x => x.Value);
             }
@@ -33,9 +35,14 @@ namespace Models
 
         public double AverageTweetsPerSecond { get; set; }
 
+        public Dictionary<string, ulong> Emojis { get; set; }
+
         public Dictionary<string, ulong> HashTags { get; }
 
         public Dictionary<string, ulong> Urls { get; }
+        public ulong NumberOfTweetsThatContainEmojis { get; set; }
+
+        public double PercentOfTweetsThatContainEmojis { get; set; }
 
         public ulong NumberOfTweetsThatContainUrl { get; set; }
 
@@ -66,6 +73,7 @@ namespace Models
         public Statistics()
         {
             Stopwatch = Stopwatch.StartNew();
+            Emojis = new Dictionary<string, ulong>();
             HashTags = new Dictionary<string, ulong>();
             Urls = new Dictionary<string, ulong>();
         }

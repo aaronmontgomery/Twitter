@@ -2,7 +2,7 @@
 
 namespace Shared
 {
-    public static partial class Extentions
+    public static partial class Extensions
     {
         public static void AddOrUpdateUniqueCollection(Dictionary<string, ulong> collection, string key, ulong value)
         {

@@ -1,6 +1,6 @@
 ﻿namespace Shared
 {
-    public static partial class Extentions
+    public static partial class Extensions
     {
         public static bool ContainsUrl(this string s)
         {
