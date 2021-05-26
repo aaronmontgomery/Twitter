@@ -37,7 +37,7 @@ namespace LabApp1
             {
                 if (tweet != null)
                 {
-                    await twitter.ProcessTweetAsync(tweet, emojis, statistics);
+                    twitter.ProcessTweet(tweet, emojis, statistics);
                 }
             }
         }

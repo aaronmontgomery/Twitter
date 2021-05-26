@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Models
@@ -14,11 +15,15 @@ namespace Models
             if (nameof(TotalNumberOfTweetsReceived) == propertyName)
             {
                 PercentOfTweetsThatContainUrl = ((double)NumberOfTweetsThatContainUrl / (double)TotalNumberOfTweetsReceived) * 100;
-
             }
         }
 
         public Stopwatch Stopwatch { get; set; }
+
+        public Dictionary<string, ulong> HashTags { get; }
+
+        public Dictionary<string, ulong> Urls { get; }
+
         public ulong NumberOfTweetsThatContainUrl { get; set; }
 
         public double PercentOfTweetsThatContainUrl { get; set; }
@@ -44,6 +49,8 @@ namespace Models
         public Statistics()
         {
             Stopwatch = Stopwatch.StartNew();
+            HashTags = new Dictionary<string, ulong>();
+            Urls = new Dictionary<string, ulong>();
         }
     }
 }
