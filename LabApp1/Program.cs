@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace LabApp1
@@ -26,11 +27,17 @@ namespace LabApp1
 
             public void LogToConsole(Models.Statistics statistics)
             {
-                Console.SetCursorPosition(0, 1);
+                Console.SetCursorPosition(0, 2);
                 Console.WriteLine("TotalNumberOfTweetsReceived: " + statistics.TotalNumberOfTweetsReceived);
                 Console.WriteLine("AverageTweetsPerHour: " + statistics.AverageTweetsPerHour);
                 Console.WriteLine("AverageTweetsPerMinute: " + statistics.AverageTweetsPerMinute);
                 Console.WriteLine("AverageTweetsPerSecond: " + statistics.AverageTweetsPerSecond);
+                Console.WriteLine("TopEmojis: ");
+                Console.WriteLine("PercentOfTweetsThatContainEmojis: ");
+                Console.WriteLine("TopHashTags: " + statistics.HashTags.FirstOrDefault());
+                Console.WriteLine("PercentOfTweetsThatContainUrl: " + statistics.PercentOfTweetsThatContainUrl);
+                Console.WriteLine("PercentOfTweetsThatContainPhotoUrl: " + statistics.PercentOfTweetsThatContainPhotoUrl);
+                Console.WriteLine("TopDomainsOfUrlsInTweets: " + statistics.Urls.FirstOrDefault());
             }
         }
     }
