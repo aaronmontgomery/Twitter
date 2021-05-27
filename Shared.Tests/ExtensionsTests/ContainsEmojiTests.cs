@@ -7,33 +7,35 @@ namespace Shared.Tests
     public partial class ExtensionsTests
     {
         [TestFixture]
-        public class ContainsEmojiTests
+        public class ContainsEmojisTests
         {
-            [TestCase()]
+            [TestCase("", ExpectedResult = true)]
             public bool ContainsEmoji__True(string s)
             {
-                return Shared.Extensions.ContainsEmoji(s);
+                return Extensions.ContainsEmoji(s, TestData.Emojis);
             }
 
             [TestCase("", ExpectedResult = false)]
             public bool ContainsEmoji__False(string s)
             {
-                return Extensions.ContainsEmoji(s);
+                return Extensions.ContainsEmoji(s, TestData.Emojis);
             }
 
             [TestCase(null)]
             public void ContainsEmoji__NullReferenceException(string s)
             {
-                Assert.Throws<System.NullReferenceException>(() => { Extensions.ContainsEmoji(s); });
+                Assert.Throws<System.NullReferenceException>(() => { Extensions.ContainsEmoji(s, TestData.Emojis); });
             }
 
             public class TestData
             {
-                public static IEnumerable TestCases
+                public static IReadOnlyCollection<Models.Shared.Emoji> Emojis = Shared.Emojis.GetEmjoisAsync().Result;
+
+                public IEnumerable TestCases
                 {
                     get
                     {
-                        yield return new TestCaseData("", new string[] { "#" }).Returns(new Dictionary<string, ulong>());
+                        yield return new TestCaseData("").Returns(new Dictionary<string, ulong>());
                     }
                 }
             }

@@ -6,7 +6,7 @@ namespace Shared
     {
         public void ProcessTweet(Models.TwitterApi.Tweet tweet, IReadOnlyCollection<Models.Shared.Emoji> emojis, Models.Statistics statistics)
         {
-            IReadOnlyDictionary<string, ulong> emoticons = tweet.Data.Text.GetEmoji(emojis);
+            IReadOnlyDictionary<string, ulong> emoticons = tweet.Data.Text.GetEmojis(emojis);
 
             foreach (KeyValuePair<string, ulong> item in emoticons)
             {
@@ -27,7 +27,7 @@ namespace Shared
                 Extensions.AddOrUpdateUniqueCollection(statistics.Urls, item.Key, item.Value);
             }
 
-            if (tweet.Data.Text.ContainsEmoji())
+            if (tweet.Data.Text.ContainsEmoji(emojis))
             {
 
             }

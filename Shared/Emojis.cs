@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Shared
 {
-    public class Emoji
+    public class Emojis
     {
         public static async Task<IReadOnlyCollection<Models.Shared.Emoji>> GetEmjoisAsync()
         {

@@ -7,7 +7,7 @@ namespace LabApp1
     {
         public async IAsyncEnumerable<Models.Statistics> AnalyzeTwitterStream()
         {
-            IReadOnlyCollection<Models.Shared.Emoji> emojis = await Shared.Emoji.GetEmjoisAsync();
+            IReadOnlyCollection<Models.Shared.Emoji> emojis = await Shared.Emojis.GetEmjoisAsync();
 
             Authentication authentication = new Authentication();
             await authentication.TokenAsync();

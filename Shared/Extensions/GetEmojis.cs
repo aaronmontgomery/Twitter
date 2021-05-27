@@ -4,7 +4,7 @@ namespace Shared
 {
     public static partial class Extensions
     {
-        public static IReadOnlyDictionary<string, ulong> GetEmoji(this string s, IReadOnlyCollection<Models.Shared.Emoji> emojis)
+        public static IReadOnlyDictionary<string, ulong> GetEmojis(this string s, IReadOnlyCollection<Models.Shared.Emoji> emojis)
         {
 
             char[] chars = s.ToCharArray();
