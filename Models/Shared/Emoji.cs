@@ -10,6 +10,7 @@
             public string Name { get; set; }
             [System.Text.Json.Serialization.JsonPropertyName("image")]
             public string Image { get; set; }
+            public char[] Unicode { get; set; }
         }
     }
 

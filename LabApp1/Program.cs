@@ -32,12 +32,12 @@ namespace LabApp1
                 Console.WriteLine("AverageTweetsPerHour: " + statistics.AverageTweetsPerHour);
                 Console.WriteLine("AverageTweetsPerMinute: " + statistics.AverageTweetsPerMinute);
                 Console.WriteLine("AverageTweetsPerSecond: " + statistics.AverageTweetsPerSecond);
-                Console.WriteLine("TopEmojis: " + statistics.Emojis.FirstOrDefault());
+                Console.WriteLine("TopEmojis: " + statistics.Emojis.OrderByDescending(x => x.Value).FirstOrDefault());
                 Console.WriteLine("PercentOfTweetsThatContainEmojis: " + statistics.PercentOfTweetsThatContainEmojis);
-                Console.WriteLine("TopHashTags: " + statistics.HashTags.FirstOrDefault());
+                Console.WriteLine("TopHashTags: " + statistics.HashTags.OrderByDescending(x => x.Value).FirstOrDefault());
                 Console.WriteLine("PercentOfTweetsThatContainUrl: " + statistics.PercentOfTweetsThatContainUrl);
                 Console.WriteLine("PercentOfTweetsThatContainPhotoUrl: " + statistics.PercentOfTweetsThatContainPhotoUrl);
-                Console.WriteLine("TopDomainsOfUrlsInTweets: " + statistics.Urls.FirstOrDefault());
+                Console.WriteLine("TopDomainsOfUrlsInTweets: " + statistics.Urls.OrderByDescending(x => x.Value).FirstOrDefault());
             }
         }
     }

@@ -35,7 +35,7 @@ namespace Models
 
         public double AverageTweetsPerSecond { get; set; }
 
-        public Dictionary<string, ulong> Emojis { get; set; }
+        public Dictionary<string, ulong> Emojis { get; }
 
         public Dictionary<string, ulong> HashTags { get; }
 

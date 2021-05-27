@@ -10,51 +10,51 @@ namespace Shared.Tests
         public class GetEmojisTests
         {
             [TestCaseSource(typeof(TestData), nameof(TestData.TestCases))]
-            public IReadOnlyDictionary<string, ulong> GetEmojis__(string s)
+            public List<Models.Shared.Emoji> GetEmojis__(string s)
             {
                 return Extensions.GetEmojis(s, TestData.Emojis);
             }
 
             [TestCase(null)]
-            public void GetEmojis__NullReferenceException(string s)
+            public void GetEmojis__ArgumentNullException(string s)
             {
-                Assert.Throws<System.NullReferenceException>(() => { Extensions.GetEmojis(s, TestData.Emojis); });
+                Assert.Throws<System.ArgumentNullException>(() => { Extensions.GetEmojis(s, TestData.Emojis); });
             }
 
             public class TestData
             {
-                public static IReadOnlyCollection<Models.Shared.Emoji> Emojis = Shared.Emojis.GetEmjoisAsync().Result;
+                public static List<Models.Shared.Emoji> Emojis = Shared.Emojis.GetEmojiLibraryAsync().Result;
 
                 public static IEnumerable TestCases
                 {
                     get
                     {
-                        yield return new TestCaseData("").Returns(new Dictionary<string, ulong>());
+                        yield return new TestCaseData("").Returns(new List<string>());
 
-                        yield return new TestCaseData("\ud83d\udc94").Returns(new Dictionary<string, ulong>()
+                        yield return new TestCaseData("\ud83d\udc94").Returns(new List<string>()
                         {
-                            { "\ud83d\udc94", 1 }
+                            { "\ud83d\udc94" }
                         });
 
-                        yield return new TestCaseData("\ud83d\udc94\ud83d\udc94").Returns(new Dictionary<string, ulong>()
+                        yield return new TestCaseData("\ud83d\udc94\ud83d\udc94").Returns(new List<string>()
                         {
-                            { "\ud83d\udc94", 2 }
+                            { "\ud83d\udc94" }
                         });
 
-                        yield return new TestCaseData("\ud83d\udd25\ud83d\ude00").Returns(new Dictionary<string, ulong>()
+                        yield return new TestCaseData("\ud83d\udd25\ud83d\ude00").Returns(new List<string>()
                         {
-                            { "\ud83d\udd25", 1 },
-                            { "\ud83d\ude00", 1 }
+                            { "\ud83d\udd25" },
+                            { "\ud83d\ude00" }
                         });
 
-                        yield return new TestCaseData("test \ud83d\ude00 string").Returns(new Dictionary<string, ulong>()
+                        yield return new TestCaseData("test \ud83d\ude00 string").Returns(new List<string>()
                         {
-                            { "\ud83d\ude00", 1 }
+                            { "\ud83d\ude00" }
                         });
 
-                        yield return new TestCaseData("test\ud83d\ude00string").Returns(new Dictionary<string, ulong>()
+                        yield return new TestCaseData("test\ud83d\ude00string").Returns(new List<string>()
                         {
-                            { "\ud83d\udc94", 1 }
+                            { "\ud83d\udc94" }
                         });
                     }
                 }

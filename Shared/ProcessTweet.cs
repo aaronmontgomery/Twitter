@@ -1,35 +1,36 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
+using System.Collections.Generic;
 
 namespace Shared
 {
     public class Twitter
     {
-        public void ProcessTweet(Models.TwitterApi.Tweet tweet, IReadOnlyCollection<Models.Shared.Emoji> emojis, Models.Statistics statistics)
+        public void ProcessTweet(Models.TwitterApi.Tweet tweet, List<Models.Shared.Emoji> emojis, Models.Statistics statistics)
         {
-            IReadOnlyDictionary<string, ulong> emoticons = tweet.Data.Text.GetEmojis(emojis);
+            List<Models.Shared.Emoji> emoticons = tweet.Data.Text.GetEmojis(emojis);
 
-            foreach (KeyValuePair<string, ulong> item in emoticons)
+            foreach (Models.Shared.Emoji emoji in emoticons)
             {
-                //Extensions.AddOrUpdateUniqueCollection(statistics.Emojis, item.Key, item.Value);
+                Extensions.AddOrUpdateUniqueCollection(statistics.Emojis, emoji.Name, (ulong)emoticons.Count(x => x.Name == emoji.Name));
             }
 
-            IReadOnlyDictionary<string, ulong> hashtags = tweet.Data.Text.CountStringPatternsEndsWithSpace(new string[] { "#" });
+            Dictionary<string, ulong> hashtags = tweet.Data.Text.CountStringPatternsEndsWithSpace(new string[] { "#" });
 
             foreach (KeyValuePair<string, ulong> item in hashtags)
             {
                 Extensions.AddOrUpdateUniqueCollection(statistics.HashTags, item.Key, item.Value);
             }
 
-            IReadOnlyDictionary<string, ulong> urls = tweet.Data.Text.CountStringPatternsEndsWithSpace(new string[] { @"http://", @"https://" });
+            Dictionary<string, ulong> urls = tweet.Data.Text.CountStringPatternsEndsWithSpace(new string[] { @"http://", @"https://" });
 
             foreach (KeyValuePair<string, ulong> item in urls)
             {
                 Extensions.AddOrUpdateUniqueCollection(statistics.Urls, item.Key, item.Value);
             }
 
-            if (tweet.Data.Text.ContainsEmoji(emojis))
+            if (emoticons.Count > 0)
             {
-
+                statistics.NumberOfTweetsThatContainEmojis++;
             }
 
             if (tweet.Data.Text.ContainsUrl())
