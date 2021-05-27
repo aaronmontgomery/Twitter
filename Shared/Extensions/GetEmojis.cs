@@ -16,7 +16,7 @@ namespace Shared
                 string[] x = emoji.Unified.Split('-');
                 foreach (string a in x)
                 {
-                    char z = char.Parse(a);
+                    //char z = char.Parse(a);
                     //System.Text.Encoding.Convert(System.Text.Encoding.Unicode, System.Text.Encoding.UTF8, (byte[])byte.Parse(a));
 
                 }

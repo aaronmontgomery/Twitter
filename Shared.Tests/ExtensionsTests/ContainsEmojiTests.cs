@@ -9,22 +9,16 @@ namespace Shared.Tests
         [TestFixture]
         public class ContainsEmojisTests
         {
-            [TestCase("", ExpectedResult = true)]
+            [TestCaseSource(typeof(TestData), nameof(TestData.TestCases))]
             public bool ContainsEmoji__True(string s)
             {
                 return Extensions.ContainsEmoji(s, TestData.Emojis);
             }
 
-            [TestCase("", ExpectedResult = false)]
-            public bool ContainsEmoji__False(string s)
+            [TestCase(null, ExpectedResult = false)]
+            public bool ContainsEmoji_NullArgument_False(string s)
             {
                 return Extensions.ContainsEmoji(s, TestData.Emojis);
-            }
-
-            [TestCase(null)]
-            public void ContainsEmoji__NullReferenceException(string s)
-            {
-                Assert.Throws<System.NullReferenceException>(() => { Extensions.ContainsEmoji(s, TestData.Emojis); });
             }
 
             public class TestData
@@ -35,7 +29,19 @@ namespace Shared.Tests
                 {
                     get
                     {
-                        yield return new TestCaseData("").Returns(new Dictionary<string, ulong>());
+                        yield return new TestCaseData("").Returns(false);
+
+                        yield return new TestCaseData("\ud83d\ude2d").Returns(true);
+
+                        yield return new TestCaseData("\ud83d\ude2d\ud83d\ude00").Returns(true);
+
+                        yield return new TestCaseData("test \ud83d\udc94 string").Returns(true);
+
+                        yield return new TestCaseData("test\ud83d\udc94string").Returns(true);
+
+                        yield return new TestCaseData("test\ud83d\udc94string").Returns(true);
+
+                        yield return new TestCaseData("test string").Returns(false);
                     }
                 }
             }

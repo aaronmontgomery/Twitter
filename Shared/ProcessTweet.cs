@@ -10,7 +10,7 @@ namespace Shared
 
             foreach (KeyValuePair<string, ulong> item in emoticons)
             {
-                Extensions.AddOrUpdateUniqueCollection(statistics.Emojis, item.Key, item.Value);
+                //Extensions.AddOrUpdateUniqueCollection(statistics.Emojis, item.Key, item.Value);
             }
 
             IReadOnlyDictionary<string, ulong> hashtags = tweet.Data.Text.CountStringPatternsEndsWithSpace(new string[] { "#" });
