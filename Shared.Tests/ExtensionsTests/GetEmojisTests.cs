@@ -31,7 +31,7 @@ namespace Shared.Tests
             {
                 public static IReadOnlyCollection<Models.Shared.Emoji> Emojis = Shared.Emojis.GetEmjoisAsync().Result;
 
-                public IEnumerable TestCases
+                public static IEnumerable TestCases
                 {
                     get
                     {
