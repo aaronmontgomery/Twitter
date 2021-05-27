@@ -21,9 +21,6 @@ namespace Models
                 PercentOfTweetsThatContainEmojis = ((double)NumberOfTweetsThatContainEmojis / (double)TotalNumberOfTweetsReceived) * 100;
                 PercentOfTweetsThatContainUrl = ((double)NumberOfTweetsThatContainUrl / (double)TotalNumberOfTweetsReceived) * 100;
                 PercentOfTweetsThatContainPhotoUrl = ((double)NumberOfTweetsThatContainPhotoUrl / (double)TotalNumberOfTweetsReceived) * 100;
-                Emojis.OrderByDescending(x => x.Value);
-                HashTags.OrderByDescending(x => x.Value);
-                Urls.OrderByDescending(x => x.Value);
             }
         }
 
