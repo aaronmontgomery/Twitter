@@ -1,6 +1,7 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using LabApp1.Interfaces;
+using TwitterApi.Interfaces;
+using TwitterApi;
 
 namespace LabApp1
 {
@@ -8,36 +9,21 @@ namespace LabApp1
     {
         static async Task Main(string[] args)
         {
-            ConsoleLog consoleLog = new ConsoleLog();
+            IConsoleLog consoleLog;
+            ITwitter twitter;
+            Authentication authentication;
+            ISampledStream sampledStream;
+            Models.Statistics statistics;
 
-            Twitter twitter = new Twitter();
+            consoleLog = new ConsoleLog();
+            twitter = new Twitter();
+            authentication = new Authentication();
+            sampledStream = new SampledStream();
+            statistics = new Models.Statistics();
 
-            await foreach (Models.Statistics statistics in twitter.AnalyzeTwitterStream())
+            await foreach (Models.Statistics statistic in twitter.AnalyzeTwitterStream(authentication, sampledStream, statistics))
             {
-                consoleLog.LogToConsole(statistics);
-            }
-        }
-
-        public class ConsoleLog
-        {
-            public ConsoleLog()
-            {
-                Console.WriteLine("LabApp1 - Aaron Montgomery");
-            }
-
-            public void LogToConsole(Models.Statistics statistics)
-            {
-                Console.SetCursorPosition(0, 2);
-                Console.WriteLine("TotalNumberOfTweetsReceived: " + statistics.TotalNumberOfTweetsReceived);
-                Console.WriteLine("AverageTweetsPerHour: " + statistics.AverageTweetsPerHour);
-                Console.WriteLine("AverageTweetsPerMinute: " + statistics.AverageTweetsPerMinute);
-                Console.WriteLine("AverageTweetsPerSecond: " + statistics.AverageTweetsPerSecond);
-                Console.WriteLine("TopEmojis: " + statistics.Emojis.OrderByDescending(x => x.Value).FirstOrDefault());
-                Console.WriteLine("PercentOfTweetsThatContainEmojis: " + statistics.PercentOfTweetsThatContainEmojis);
-                Console.WriteLine("TopHashTags: " + statistics.HashTags.OrderByDescending(x => x.Value).FirstOrDefault());
-                Console.WriteLine("PercentOfTweetsThatContainUrl: " + statistics.PercentOfTweetsThatContainUrl);
-                Console.WriteLine("PercentOfTweetsThatContainPhotoUrl: " + statistics.PercentOfTweetsThatContainPhotoUrl);
-                Console.WriteLine("TopDomainsOfUrlsInTweets: " + statistics.Urls.OrderByDescending(x => x.Value).FirstOrDefault());
+                consoleLog.LogToConsole(statistic);
             }
         }
     }

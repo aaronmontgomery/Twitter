@@ -1,28 +1,22 @@
 ﻿using System.Collections.Generic;
 using TwitterApi;
+using TwitterApi.Interfaces;
 
 namespace LabApp1
 {
-    public partial class Twitter
+    public partial class Twitter : Interfaces.ITwitter
     {
-        public async IAsyncEnumerable<Models.Statistics> AnalyzeTwitterStream()
+        public async IAsyncEnumerable<Models.Statistics> AnalyzeTwitterStream(Authentication authentication, ISampledStream sampledStream, Models.Statistics statistics)
         {
-            List<Models.Shared.Emoji> emojis = await Shared.Emojis.GetEmojiLibraryAsync();
-
-            Authentication authentication = new Authentication();
+            List<Models.Shared.Emoji> emojis;
+            
+            emojis = await Shared.Emojis.GetEmojiLibraryAsync();
             await authentication.TokenAsync();
-
-            SampledStream sampledStream = new SampledStream();
-
-            Models.Statistics statistics = new Models.Statistics();
-
-            Shared.Twitter twitter = new Shared.Twitter();
-
             await foreach (Models.TwitterApi.Tweet tweet in sampledStream.GetSampledStreamAsync(authentication.Token))
             {
                 if (tweet != null)
                 {
-                    twitter.ProcessTweet(tweet, emojis, statistics);
+                    ProcessTweet(tweet, emojis, statistics);
                     yield return statistics;
                 }
             }

@@ -1,38 +1,45 @@
 ﻿using System.IO;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace TwitterApi
 {
-    public class SampledStream //: Shared.WebClient
+    public class SampledStream : Interfaces.ISampledStream
     {
         public async IAsyncEnumerable<Models.TwitterApi.Tweet> GetSampledStreamAsync(Models.TwitterApi.Token token)
         {
-            using HttpClient httpClient = new HttpClient();
+            HttpClient httpClient;
+            Stream stream;
+            TextReader textReader;
+            string json;
+            Models.TwitterApi.Tweet tweet;
 
-            httpClient.DefaultRequestHeaders.Authorization = System.Net.Http.Headers.AuthenticationHeaderValue.Parse($"Bearer {token.AccessToken}");
-
-            using Stream stream = await httpClient.GetStreamAsync("https://api.twitter.com/2/tweets/sample/stream");
-
-            using TextReader textReader = new StreamReader(stream);
-
-            while (stream.CanRead)
+            using (httpClient = new HttpClient())
             {
-                string json;
-                Models.TwitterApi.Tweet tweet;
-
-                try
+                httpClient.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"Bearer {token.AccessToken}");
+                using (stream = await httpClient.GetStreamAsync("https://api.twitter.com/2/tweets/sample/stream"))
                 {
-                    json = await textReader.ReadLineAsync();
-                    tweet = System.Text.Json.JsonSerializer.Deserialize<Models.TwitterApi.Tweet>(json);
-                }
+                    using (textReader = new StreamReader(stream))
+                    {
+                        while (stream.CanRead)
+                        {
+                            try
+                            {
+                                json = await textReader.ReadLineAsync();
+                                tweet = JsonSerializer.Deserialize<Models.TwitterApi.Tweet>(json);
+                            }
 
-                catch
-                {
-                    tweet = null;
-                }
+                            catch
+                            {
+                                tweet = null;
+                            }
 
-                yield return tweet;
+                            yield return tweet;
+                        }
+                    }
+                }
             }
         }
     }

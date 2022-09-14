@@ -1,9 +1,10 @@
-﻿using System.Linq;
+﻿using Shared;
+using System.Linq;
 using System.Collections.Generic;
 
-namespace Shared
+namespace LabApp1
 {
-    public class Twitter
+    public partial class Twitter
     {
         public void ProcessTweet(Models.TwitterApi.Tweet tweet, List<Models.Shared.Emoji> emojis, Models.Statistics statistics)
         {
