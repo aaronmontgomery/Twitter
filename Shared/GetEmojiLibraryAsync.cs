@@ -12,11 +12,19 @@ namespace Shared
             HttpClient httpClient;
             string json;
             List<Models.Shared.Emoji> emojies;
-            
-            using (httpClient = new HttpClient())
+
+            try
             {
-                json = await httpClient.GetStringAsync("https://raw.githubusercontent.com/iamcal/emoji-data/master/emoji.json");
-                emojies = JsonSerializer.Deserialize<List<Models.Shared.Emoji>>(json);
+                using (httpClient = new HttpClient())
+                {
+                    json = await httpClient.GetStringAsync("https://raw.githubusercontent.com/iamcal/emoji-data/master/emoji.json");
+                    emojies = JsonSerializer.Deserialize<List<Models.Shared.Emoji>>(json);
+                }
+            }
+
+            catch
+            {
+                throw;
             }
             
             return emojies;

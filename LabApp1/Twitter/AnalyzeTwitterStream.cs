@@ -6,17 +6,22 @@ namespace LabApp1
 {
     public partial class Twitter : Interfaces.ITwitter
     {
-        public async IAsyncEnumerable<Models.Statistics> AnalyzeTwitterStream(Authentication authentication, ISampledStream sampledStream, Models.Statistics statistics)
+        public async IAsyncEnumerable<Models.Statistics> AnalyzeTwitterStream(Authentication authentication, ISampledStream sampledStream, Models.Statistics statistics, List<Models.Shared.Emoji> emojis)
         {
-            List<Models.Shared.Emoji> emojis;
-            
-            emojis = await Shared.Emojis.GetEmojiLibraryAsync();
-            await authentication.TokenAsync();
             await foreach (Models.TwitterApi.Tweet tweet in sampledStream.GetSampledStreamAsync(authentication.Token))
             {
                 if (tweet != null)
                 {
-                    ProcessTweet(tweet, emojis, statistics);
+                    try
+                    {
+                        ProcessTweet(tweet, emojis, statistics);
+                    }
+
+                    catch
+                    {
+
+                    }
+
                     yield return statistics;
                 }
             }
