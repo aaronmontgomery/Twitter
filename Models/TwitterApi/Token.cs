@@ -1,13 +1,15 @@
-﻿namespace Models
+﻿using System.Text.Json.Serialization;
+
+namespace Models
 {
     public partial class TwitterApi
     {
         public class Token
         {
-            [System.Text.Json.Serialization.JsonPropertyName("access_token")]
+            [JsonPropertyName("access_token")]
             public string AccessToken { get; set; }
-
-            [System.Text.Json.Serialization.JsonPropertyName("token_type")]
+            
+            [JsonPropertyName("token_type")]
             public string TokenType { get; set; }
         }
     }

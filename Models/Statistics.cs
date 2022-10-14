@@ -7,22 +7,6 @@ namespace Models
 {
     public class Statistics : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
-            if (nameof(TotalNumberOfTweetsReceived) == propertyName)
-            {
-                AverageTweetsPerHour = (double)TotalNumberOfTweetsReceived / (double)Stopwatch.Elapsed.TotalHours;
-                AverageTweetsPerMinute = (double)TotalNumberOfTweetsReceived / (double)Stopwatch.Elapsed.TotalMinutes;
-                AverageTweetsPerSecond = (double)TotalNumberOfTweetsReceived / (double)Stopwatch.Elapsed.TotalSeconds;
-                PercentOfTweetsThatContainEmojis = ((double)NumberOfTweetsThatContainEmojis / (double)TotalNumberOfTweetsReceived) * 100;
-                PercentOfTweetsThatContainUrl = ((double)NumberOfTweetsThatContainUrl / (double)TotalNumberOfTweetsReceived) * 100;
-                PercentOfTweetsThatContainPhotoUrl = ((double)NumberOfTweetsThatContainPhotoUrl / (double)TotalNumberOfTweetsReceived) * 100;
-            }
-        }
-
         public Stopwatch Stopwatch { get; set; }
 
         public double AverageTweetsPerHour { get; set; }
@@ -36,6 +20,7 @@ namespace Models
         public Dictionary<string, ulong> HashTags { get; }
 
         public Dictionary<string, ulong> Urls { get; }
+
         public ulong NumberOfTweetsThatContainEmojis { get; set; }
 
         public double PercentOfTweetsThatContainEmojis { get; set; }
@@ -64,7 +49,9 @@ namespace Models
                     NotifyPropertyChanged();
                 }
             }
-        }        
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public Statistics()
         {
@@ -72,6 +59,21 @@ namespace Models
             Emojis = new Dictionary<string, ulong>();
             HashTags = new Dictionary<string, ulong>();
             Urls = new Dictionary<string, ulong>();
+        }
+
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new(propertyName));
+
+            if (nameof(TotalNumberOfTweetsReceived) == propertyName)
+            {
+                AverageTweetsPerHour = (double)TotalNumberOfTweetsReceived / (double)Stopwatch.Elapsed.TotalHours;
+                AverageTweetsPerMinute = (double)TotalNumberOfTweetsReceived / (double)Stopwatch.Elapsed.TotalMinutes;
+                AverageTweetsPerSecond = (double)TotalNumberOfTweetsReceived / (double)Stopwatch.Elapsed.TotalSeconds;
+                PercentOfTweetsThatContainEmojis = ((double)NumberOfTweetsThatContainEmojis / (double)TotalNumberOfTweetsReceived) * 100;
+                PercentOfTweetsThatContainUrl = ((double)NumberOfTweetsThatContainUrl / (double)TotalNumberOfTweetsReceived) * 100;
+                PercentOfTweetsThatContainPhotoUrl = ((double)NumberOfTweetsThatContainPhotoUrl / (double)TotalNumberOfTweetsReceived) * 100;
+            }
         }
     }
 }

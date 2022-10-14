@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TwitterApi
 {
-    public partial class Authentication : Key
+    public partial class Authentication : Key, Interfaces.IAuthentication
     {
         public async Task<Models.TwitterApi.Token> GetTokenAsync()
         {
@@ -17,7 +17,7 @@ namespace TwitterApi
 
             try
             {
-                using (httpClient = new HttpClient())
+                using (httpClient = new())
                 {
                     httpClient.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"Basic {EncodedKey}");
                     httpContent = new StringContent("grant_type=client_credentials", Encoding.UTF8, "application/x-www-form-urlencoded");

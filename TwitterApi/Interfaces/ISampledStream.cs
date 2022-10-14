@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
 
-namespace TwitterApi.Interfaces
+namespace TwitterApi
 {
-    public interface ISampledStream
+    public partial class Interfaces
     {
-        IAsyncEnumerable<Models.TwitterApi.Tweet> GetSampledStreamAsync(Models.TwitterApi.Token token);
+        public interface ISampledStream
+        {
+            IAsyncEnumerable<Models.TwitterApi.Tweet> GetSampledStreamAsync(Models.TwitterApi.Token token);
+        }
     }
 }

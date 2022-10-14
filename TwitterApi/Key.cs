@@ -11,8 +11,11 @@ namespace TwitterApi
 
         public Key()
         {
-            string urlEncodedKey = $"{HttpUtility.UrlEncode(ApiKey)}{":"}{HttpUtility.UrlEncode(ApiSecretKey)}";
-            byte[] bytes = Encoding.UTF8.GetBytes(urlEncodedKey);
+            string urlEncodedKey;
+            byte[] bytes;
+            
+            urlEncodedKey = $"{HttpUtility.UrlEncode(ApiKey)}:{HttpUtility.UrlEncode(ApiSecretKey)}";
+            bytes = Encoding.UTF8.GetBytes(urlEncodedKey);
             EncodedKey = Convert.ToBase64String(bytes);
         }
     }

@@ -4,7 +4,7 @@ namespace Shared
 {
     public static partial class Extensions
     {
-        public static void AddOrUpdateUniqueCollection(Dictionary<string, ulong> collection, string key, ulong value)
+        public static void AddOrUpdateUniqueCollection(IDictionary<string, ulong> collection, string key, ulong value)
         {
             if (collection.ContainsKey(key))
             {

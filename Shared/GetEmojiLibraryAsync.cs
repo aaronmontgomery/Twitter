@@ -1,24 +1,23 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Text.Json;
 using System.Net.Http;
-using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace Shared
 {
     public class Emojis
     {
-        public static async Task<List<Models.Shared.Emoji>> GetEmojiLibraryAsync()
+        public static async Task<Models.Shared.Emoji[]> GetEmojiLibraryAsync()
         {
             HttpClient httpClient;
             string json;
-            List<Models.Shared.Emoji> emojies;
+            Models.Shared.Emoji[] emojies;
 
             try
             {
                 using (httpClient = new HttpClient())
                 {
                     json = await httpClient.GetStringAsync("https://raw.githubusercontent.com/iamcal/emoji-data/master/emoji.json");
-                    emojies = JsonSerializer.Deserialize<List<Models.Shared.Emoji>>(json);
+                    emojies = JsonSerializer.Deserialize<Models.Shared.Emoji[]>(json);
                 }
             }
 

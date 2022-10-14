@@ -10,7 +10,7 @@ namespace Shared.Tests
         public class CountStringPatternsEndsWithSpaceTests
         {
             [TestCaseSource(typeof(TestData), nameof(TestData.TestCases))]
-            public IReadOnlyDictionary<string, ulong> CountStringPatternsEndsWithSpace__CountsPatternsInStringsPassed(string s, string[] patterns)
+            public IDictionary<string, ulong> CountStringPatternsEndsWithSpace__CountsPatternsInStringsPassed(string s, string[] patterns)
             {
                 return Extensions.CountStringPatternsEndsWithSpace(s, patterns);
             }

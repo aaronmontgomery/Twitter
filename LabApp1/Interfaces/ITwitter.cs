@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
-using TwitterApi.Interfaces;
 using TwitterApi;
 
-namespace LabApp1.Interfaces
+namespace LabApp1
 {
-    public interface ITwitter
+    public partial class Interfaces
     {
-        IAsyncEnumerable<Models.Statistics> AnalyzeTwitterStream(Authentication authentication, ISampledStream sampledStream, Models.Statistics statistics, List<Models.Shared.Emoji> emojis);
-        void ProcessTweet(Models.TwitterApi.Tweet tweet, List<Models.Shared.Emoji> emojis, Models.Statistics statistics);
+        internal interface ITwitter
+        {
+            IAsyncEnumerable<Models.Statistics> AnalyzeTwitterStream(Authentication authentication, TwitterApi.Interfaces.ISampledStream sampledStream, Models.Statistics statistics, IEnumerable<Models.Shared.Emoji> emojis);
+            void ProcessTweet(Models.TwitterApi.Tweet tweet, IEnumerable<Models.Shared.Emoji> emojis, Models.Statistics statistics);
+        }
     }
 }

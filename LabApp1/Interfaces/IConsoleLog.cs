@@ -1,7 +1,10 @@
-﻿namespace LabApp1.Interfaces
+﻿namespace LabApp1
 {
-    public interface IConsoleLog
+    public partial class Interfaces
     {
-        void LogToConsole(Models.Statistics statistics);
+        internal interface IConsoleLog
+        {
+            void LogToConsole(Models.Statistics statistics);
+        }
     }
 }

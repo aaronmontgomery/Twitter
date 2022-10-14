@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TwitterApi
 {
-    public partial class Authentication : Key
+    public partial class Authentication : Key, Interfaces.IAuthentication
     {
         public async Task InvalidateTokenAsync()
         {
@@ -15,10 +15,21 @@ namespace TwitterApi
             
             using (httpClient = new HttpClient())
             {
-                httpClient.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"OAuth oauth_consumer_key={"\""}CLIENT_KEY{"\""}");
+                httpClient.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"Basic {EncodedKey}");
                 httpContent = new StringContent($"access_token={Token.AccessToken}", Encoding.UTF8, "application/x-www-form-urlencoded");
-                httpResponseMessage = await httpClient.PostAsync("https://api.twitter.com/oauth2/invalidate_token", httpContent);
+                httpResponseMessage = await httpClient.PostAsync($"https://api.twitter.com/oauth2/invalidate_token", httpContent);
             }
         }
     }
 }
+
+/*
+{
+    "errors": [
+        {
+            "code": 348,
+            "message": "Client application is not permitted to to invalidate this token."
+        }
+    ]
+}
+*/

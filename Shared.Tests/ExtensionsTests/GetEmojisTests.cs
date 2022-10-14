@@ -10,7 +10,7 @@ namespace Shared.Tests
         public class GetEmojisTests
         {
             [TestCaseSource(typeof(TestData), nameof(TestData.TestCases))]
-            public List<Models.Shared.Emoji> GetEmojis__(string s)
+            public IList<Models.Shared.Emoji> GetEmojis__(string s)
             {
                 return Extensions.GetEmojis(s, TestData.Emojis);
             }
@@ -23,7 +23,7 @@ namespace Shared.Tests
 
             public class TestData
             {
-                public static List<Models.Shared.Emoji> Emojis = Shared.Emojis.GetEmojiLibraryAsync().Result;
+                public static Models.Shared.Emoji[] Emojis = Shared.Emojis.GetEmojiLibraryAsync().Result;
 
                 public static IEnumerable TestCases
                 {
