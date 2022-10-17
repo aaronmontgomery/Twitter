@@ -25,9 +25,9 @@ namespace Shared
             {
                 if (chars.Length % 2 == 0)
                 {
-                    for (int i = 0; i < chars.Length; i+=2)
+                    for (int i = 0; i < chars.Length; i += 1)
                     {
-                        bytes = Encoding.UTF32.GetBytes(chars);
+                        bytes = Encoding.UTF32.GetBytes(new char[] { chars[i], chars[i + 1] }.ToArray());
                         stringUtf32 = BitConverter.ToString(bytes);
                         stringBuilder = new();
                         stringParts = stringUtf32.Split('-');

@@ -34,19 +34,19 @@ namespace Models
         }
 
 
-        private readonly IDictionary<string, ulong> _emojis;
+        private readonly Dictionary<string, ulong> _emojis;
         public IDictionary<string, ulong> Emojis
         {
             get => _emojis;
         }
         
-        private readonly IDictionary<string, ulong> _hashTags;
+        private readonly Dictionary<string, ulong> _hashTags;
         public IDictionary<string, ulong> HashTags
         {
             get => _hashTags;
         }
         
-        private readonly IDictionary<string, ulong> _urls;
+        private readonly Dictionary<string, ulong> _urls;
         public IDictionary<string, ulong> Urls
         {
             get => _urls;
@@ -113,9 +113,9 @@ namespace Models
         public Statistics()
         {
             _stopwatch = Stopwatch.StartNew();
-            _emojis = new Dictionary<string, ulong>();
-            _hashTags = new Dictionary<string, ulong>();
-            _urls = new Dictionary<string, ulong>();
+            _emojis = new();
+            _hashTags = new();
+            _urls = new();
         }
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")

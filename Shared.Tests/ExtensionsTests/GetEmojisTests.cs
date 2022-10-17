@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -10,10 +11,8 @@ namespace Shared.Tests
         public class GetEmojisTests
         {
             [TestCaseSource(typeof(TestData), nameof(TestData.TestCases))]
-            public IList<Models.Shared.Emoji> GetEmojis__(string s)
-            {
-                return Extensions.GetEmojis(s, TestData.Emojis);
-            }
+            public IEnumerable<char[]> GetEmojis__(string s) =>
+                Extensions.GetEmojis(s, TestData.Emojis).Select(x => x.Unicode);
 
             [TestCase(null)]
             public void GetEmojis__ArgumentNullException(string s)
@@ -29,40 +28,40 @@ namespace Shared.Tests
                 {
                     get
                     {
-                        yield return new TestCaseData("").Returns(new List<string>());
-
-                        yield return new TestCaseData("\ud83d\udc94").Returns(new List<Models.Shared.Emoji>()
-                        {
-                            //{ "\ud83d\udc94" }
-                            new Models.Shared.Emoji()
+                        yield return new TestCaseData("")
+                            .Returns(new List<string>());
+                        
+                        yield return new TestCaseData("\ud83d\udc94")
+                            .Returns(new List<char[]>()
                             {
-                                Image = "1f600.png",
-                                Name = "GRINNING FACE",
-                                Unicode = new char[] { '\ud83d', '\ude00' },
-                                Unified = "1F600"
-                            }
-                        });
+                                new char[] { '\ud83d', '\udc94' }
+                            });
+                        
+                        yield return new TestCaseData("\ud83d\udc94\ud83d\udc94")
+                            .Returns(new List<char[]>()
+                            {
+                                new char[] { '\ud83d', '\udc94' },
+                                new char[] { '\ud83d', '\udc94' }
+                            });
+                        
+                        yield return new TestCaseData("\ud83d\udd25\ud83d\ude00")
+                            .Returns(new List<char[]>()
+                            {
+                                new char[] { '\ud83d', '\udd25' },
+                                new char[] { '\ud83d', '\ude00' }
+                            });
 
-                        yield return new TestCaseData("\ud83d\udc94\ud83d\udc94").Returns(new List<string>()
-                        {
-                            { "\ud83d\udc94" }
-                        });
+                        yield return new TestCaseData("test \ud83d\ude00 string")
+                            .Returns(new List<string>()
+                            {
+                                { "\ud83d\ude00" }
+                            });
 
-                        yield return new TestCaseData("\ud83d\udd25\ud83d\ude00").Returns(new List<string>()
-                        {
-                            { "\ud83d\udd25" },
-                            { "\ud83d\ude00" }
-                        });
-
-                        yield return new TestCaseData("test \ud83d\ude00 string").Returns(new List<string>()
-                        {
-                            { "\ud83d\ude00" }
-                        });
-
-                        yield return new TestCaseData("test\ud83d\ude00string").Returns(new List<string>()
-                        {
-                            { "\ud83d\udc94" }
-                        });
+                        yield return new TestCaseData("test\ud83d\ude00string")
+                            .Returns(new List<string>()
+                            {
+                                { "\ud83d\ude00" }
+                            });
                     }
                 }
             }
