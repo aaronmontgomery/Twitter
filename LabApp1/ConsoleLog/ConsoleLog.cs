@@ -18,30 +18,30 @@ namespace LabApp1
             Console.SetCursorPosition(0, ++count);
             Console.WriteLine("LabApp1 - Aaron Montgomery");
             Console.SetCursorPosition(0, count += 2);
-            Console.WriteLine("TotalNumberOfTweetsReceived: " + statistics.TotalNumberOfTweetsReceived, 0, Console.BufferWidth);
+            Console.WriteLine($"Total Number Of Tweets Received: {statistics.TotalNumberOfTweetsReceived}", 0, Console.BufferWidth);
             Console.SetCursorPosition(0, ++count);
-            Console.WriteLine("AverageTweetsPerHour: " + statistics.AverageTweetsPerHour, 0, Console.BufferWidth);
+            Console.WriteLine($"Average Tweets/Hour: {statistics.AverageTweetsPerHour}", 0, Console.BufferWidth);
             Console.SetCursorPosition(0, ++count);
-            Console.WriteLine("AverageTweetsPerMinute: " + statistics.AverageTweetsPerMinute, 0, Console.BufferWidth);
+            Console.WriteLine($"Average Tweets/Minute: {statistics.AverageTweetsPerMinute}", 0, Console.BufferWidth);
             Console.SetCursorPosition(0, ++count);
-            Console.WriteLine("AverageTweetsPerSecond: " + statistics.AverageTweetsPerSecond, 0, Console.BufferWidth);
+            Console.WriteLine($"Average Tweets/Second: {statistics.AverageTweetsPerSecond}", 0, Console.BufferWidth);
 
             foreach (var emoji in statistics.Emojis.OrderByDescending(x => x.Value).Take(10))
             {
                 Console.SetCursorPosition(0, ++count);
-                Console.WriteLine("TopEmojis: " + emoji, 0, Console.BufferWidth);
+                Console.WriteLine($"Top Emojis {count - 6}: " + emoji, 0, Console.BufferWidth);
             }
             
             Console.SetCursorPosition(0, ++count);
-            Console.WriteLine("PercentOfTweetsThatContainEmojis: " + statistics.PercentOfTweetsThatContainEmojis, 0, Console.BufferWidth);
+            Console.WriteLine($"Percent Of Tweets That Contain Emojis: {statistics.PercentOfTweetsThatContainEmojis}%", 0, Console.BufferWidth);
             Console.SetCursorPosition(0, ++count);
-            Console.WriteLine("TopHashTags: " + statistics.HashTags.OrderByDescending(x => x.Value).FirstOrDefault(), 0, Console.BufferWidth);
+            Console.WriteLine($"Top Hash Tags: {statistics.HashTags.OrderByDescending(x => x.Value).FirstOrDefault()}", 0, Console.BufferWidth);
             Console.SetCursorPosition(0, ++count);
-            Console.WriteLine("PercentOfTweetsThatContainUrl: " + statistics.PercentOfTweetsThatContainUrl, 0, Console.BufferWidth);
+            Console.WriteLine($"Percent Of Tweets That Contain Url: {statistics.PercentOfTweetsThatContainUrl}%", 0, Console.BufferWidth);
             Console.SetCursorPosition(0, ++count);
-            Console.WriteLine("PercentOfTweetsThatContainPhotoUrl: " + statistics.PercentOfTweetsThatContainPhotoUrl, 0, Console.BufferWidth);
+            Console.WriteLine($"Percent Of Tweets That Contain Photo Url: {statistics.PercentOfTweetsThatContainPhotoUrl}%", 0, Console.BufferWidth);
             Console.SetCursorPosition(0, ++count);
-            Console.WriteLine("TopDomainsOfUrlsInTweets: " + statistics.Urls.OrderByDescending(x => x.Value).FirstOrDefault(), 0, Console.BufferWidth);
+            Console.WriteLine($"Top Domains Of Urls In Tweets: {statistics.Urls.OrderByDescending(x => x.Value).FirstOrDefault()}", 0, Console.BufferWidth);
 
             Thread.Sleep(100);
         }
