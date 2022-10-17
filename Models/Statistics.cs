@@ -7,40 +7,97 @@ namespace Models
 {
     public class Statistics : INotifyPropertyChanged
     {
-        public Stopwatch Stopwatch { get; set; }
+        private readonly Stopwatch _stopwatch;
+        public Stopwatch Stopwatch
+        {
+            get => _stopwatch;
+        }
+        
+        private double _averageTweetsPerHour;
+        public double AverageTweetsPerHour
+        {
+            get => _averageTweetsPerHour;
+        }
 
-        public double AverageTweetsPerHour { get; set; }
+        private double _averageTweetsPerMinute;
+        public double AverageTweetsPerMinute
+        {
+            get => _averageTweetsPerMinute;
+            set => _averageTweetsPerMinute = value;
+        }
 
-        public double AverageTweetsPerMinute { get; set; }
+        private double _averageTweetsPerSecond;
+        public double AverageTweetsPerSecond
+        {
+            get => _averageTweetsPerSecond;
+            set => _averageTweetsPerSecond = value;
+        }
 
-        public double AverageTweetsPerSecond { get; set; }
 
-        public Dictionary<string, ulong> Emojis { get; }
+        private readonly IDictionary<string, ulong> _emojis;
+        public IDictionary<string, ulong> Emojis
+        {
+            get => _emojis;
+        }
+        
+        private readonly IDictionary<string, ulong> _hashTags;
+        public IDictionary<string, ulong> HashTags
+        {
+            get => _hashTags;
+        }
+        
+        private readonly IDictionary<string, ulong> _urls;
+        public IDictionary<string, ulong> Urls
+        {
+            get => _urls;
+        }
 
-        public Dictionary<string, ulong> HashTags { get; }
+        public ulong _numberOfTweetsThatContainEmojis;
+        public ulong NumberOfTweetsThatContainEmojis
+        {
+            get => _numberOfTweetsThatContainEmojis;
+            set => _numberOfTweetsThatContainEmojis = value;
+        }
 
-        public Dictionary<string, ulong> Urls { get; }
+        private double _percentOfTweetsThatContainEmojis;
+        public double PercentOfTweetsThatContainEmojis
+        {
+            get => _percentOfTweetsThatContainEmojis;
+            set => _percentOfTweetsThatContainEmojis = value;
+        }
 
-        public ulong NumberOfTweetsThatContainEmojis { get; set; }
+        private ulong _numberOfTweetsThatContainUrl;
+        public ulong NumberOfTweetsThatContainUrl
+        {
+            get => _numberOfTweetsThatContainUrl;
+            set => _numberOfTweetsThatContainUrl = value;
+        }
 
-        public double PercentOfTweetsThatContainEmojis { get; set; }
+        private double _percentOfTweetsThatContainUrl;
+        public double PercentOfTweetsThatContainUrl
+        {
+            get => _percentOfTweetsThatContainUrl;
+            set => _percentOfTweetsThatContainUrl = value;
+        }
 
-        public ulong NumberOfTweetsThatContainUrl { get; set; }
+        private ulong _numberOfTweetsThatContainPhotoUrl;
+        public ulong NumberOfTweetsThatContainPhotoUrl
+        {
+            get => _numberOfTweetsThatContainPhotoUrl;
+            set => _numberOfTweetsThatContainPhotoUrl = value;
+        }
 
-        public double PercentOfTweetsThatContainUrl { get; set; }
-
-        public ulong NumberOfTweetsThatContainPhotoUrl { get; set; }
-
-        public double PercentOfTweetsThatContainPhotoUrl { get; set; }
+        private double _percentOfTweetsThatContainPhotoUrl;
+        public double PercentOfTweetsThatContainPhotoUrl
+        {
+            get => _percentOfTweetsThatContainPhotoUrl;
+            set => _percentOfTweetsThatContainPhotoUrl = value;
+        }
 
         private ulong totalNumberOfTweetsReceived;
         public ulong TotalNumberOfTweetsReceived
         {
-            get
-            {
-                return totalNumberOfTweetsReceived;
-            }
-
+            get => totalNumberOfTweetsReceived;
             set
             {
                 if (value != totalNumberOfTweetsReceived)
@@ -50,15 +107,15 @@ namespace Models
                 }
             }
         }
-
+        
         public event PropertyChangedEventHandler PropertyChanged;
 
         public Statistics()
         {
-            Stopwatch = Stopwatch.StartNew();
-            Emojis = new Dictionary<string, ulong>();
-            HashTags = new Dictionary<string, ulong>();
-            Urls = new Dictionary<string, ulong>();
+            _stopwatch = Stopwatch.StartNew();
+            _emojis = new Dictionary<string, ulong>();
+            _hashTags = new Dictionary<string, ulong>();
+            _urls = new Dictionary<string, ulong>();
         }
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
@@ -67,12 +124,12 @@ namespace Models
 
             if (nameof(TotalNumberOfTweetsReceived) == propertyName)
             {
-                AverageTweetsPerHour = (double)TotalNumberOfTweetsReceived / (double)Stopwatch.Elapsed.TotalHours;
-                AverageTweetsPerMinute = (double)TotalNumberOfTweetsReceived / (double)Stopwatch.Elapsed.TotalMinutes;
-                AverageTweetsPerSecond = (double)TotalNumberOfTweetsReceived / (double)Stopwatch.Elapsed.TotalSeconds;
-                PercentOfTweetsThatContainEmojis = ((double)NumberOfTweetsThatContainEmojis / (double)TotalNumberOfTweetsReceived) * 100;
-                PercentOfTweetsThatContainUrl = ((double)NumberOfTweetsThatContainUrl / (double)TotalNumberOfTweetsReceived) * 100;
-                PercentOfTweetsThatContainPhotoUrl = ((double)NumberOfTweetsThatContainPhotoUrl / (double)TotalNumberOfTweetsReceived) * 100;
+                _averageTweetsPerHour = (double)TotalNumberOfTweetsReceived / (double)Stopwatch.Elapsed.TotalHours;
+                _averageTweetsPerMinute = (double)TotalNumberOfTweetsReceived / (double)Stopwatch.Elapsed.TotalMinutes;
+                _averageTweetsPerSecond = (double)TotalNumberOfTweetsReceived / (double)Stopwatch.Elapsed.TotalSeconds;
+                _percentOfTweetsThatContainEmojis = ((double)NumberOfTweetsThatContainEmojis / (double)TotalNumberOfTweetsReceived) * 100;
+                _percentOfTweetsThatContainUrl = ((double)NumberOfTweetsThatContainUrl / (double)TotalNumberOfTweetsReceived) * 100;
+                _percentOfTweetsThatContainPhotoUrl = ((double)NumberOfTweetsThatContainPhotoUrl / (double)TotalNumberOfTweetsReceived) * 100;
             }
         }
     }
