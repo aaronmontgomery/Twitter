@@ -25,7 +25,7 @@ namespace Shared
             {
                 if (chars.Length % 2 == 0)
                 {
-                    for (int i = 0; i < chars.Length; i += 1)
+                    for (int i = 0; i < chars.Length; i += 2)
                     {
                         bytes = Encoding.UTF32.GetBytes(new char[] { chars[i], chars[i + 1] }.ToArray());
                         stringUtf32 = BitConverter.ToString(bytes);
@@ -40,7 +40,7 @@ namespace Shared
                         emoji = emojis.SingleOrDefault(x => x.Unified == unified);
                         if (emoji != null)
                         {
-                            emoji.Unicode = new char[] { chars[i], chars[++i] };
+                            emoji.Unicode = new char[] { chars[i], chars[i + 1] };
                             symbols.Add(emoji);
                         }
                     }
