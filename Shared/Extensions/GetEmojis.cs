@@ -11,6 +11,7 @@ namespace Shared
         {
             List<Models.Shared.Emoji> symbols;
             char[] chars;
+            char[] tempChars;
             byte[] bytes;
             string stringUtf32;
             StringBuilder stringBuilder;
@@ -27,7 +28,8 @@ namespace Shared
                 {
                     for (int i = 0; i < chars.Length; i += 2)
                     {
-                        bytes = Encoding.UTF32.GetBytes(new char[] { chars[i], chars[i + 1] }.ToArray());
+                        tempChars = new char[] { chars[i], chars[i + 1] };
+                        bytes = Encoding.UTF32.GetBytes(tempChars);
                         stringUtf32 = BitConverter.ToString(bytes);
                         stringBuilder = new();
                         stringParts = stringUtf32.Split('-');
@@ -40,7 +42,7 @@ namespace Shared
                         emoji = emojis.SingleOrDefault(x => x.Unified == unified);
                         if (emoji != null)
                         {
-                            emoji.Unicode = new char[] { chars[i], chars[i + 1] };
+                            emoji.Unicode = tempChars;
                             symbols.Add(emoji);
                         }
                     }
