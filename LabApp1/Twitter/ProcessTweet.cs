@@ -4,7 +4,7 @@ using Shared;
 
 namespace LabApp1
 {
-    public partial class Twitter
+    public partial class Twitter : Interfaces.ITwitter
     {
         public void ProcessTweet(Models.TwitterApi.Tweet tweet, IEnumerable<Models.Shared.Emoji> emojis, Models.Statistics statistics)
         {
